@@ -2,7 +2,6 @@ import numpy as np
 import torch 
 import torch.nn as nn
 from torch.distributions import Categorical
-from Networks import layer_init
 
 class Scale(nn.Module):
     def __init__(self, scale):

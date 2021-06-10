@@ -4,7 +4,7 @@ import wandb
 import time
 import torch
 from envs import make_env, VecPyTorch
-from stable_baselines3.common.vec_env import DummyVecEnv
+from stable_baselines3.common.vec_env import DummyVecEnv, SubprocVecEnv
 import random
 import numpy as np
 
@@ -16,7 +16,7 @@ class Config:
     self.num_env = 8
 
     self.env_id = env_id
-    self.env = VecPyTorch(DummyVecEnv([make_env(env_id, self.seed+i, i) for i in range(self.num_env)]), self.device)
+    self.env = VecPyTorch(SubprocVecEnv([make_env(env_id, self.seed+i) for i in range(self.num_env)]), self.device)
     self.state_space = self.env.observation_space.shape[0]
     self.action_space = self.env.action_space.n
 
@@ -44,15 +44,15 @@ class Config:
     self.lr_annealing = False
     self.epsilon_annealing = False
     self.learn_every = 4
-    self.entropy_beta = 0.013
+    self.entropy_beta = 0.01
 
     self.model = None
 
     self.wandb = False
     self.save_loc = None
 
-    self.model_path = 'checkpoint/3891200.pth'
-
+    # continue from this checkpoint
+    self.model_path = 'checkpoint/any.pth'
 
     self.init_seed()
   
