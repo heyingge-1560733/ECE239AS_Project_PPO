@@ -51,7 +51,6 @@ class Config:
     self.wandb = False
     self.save_loc = None
 
-    # continue from this checkpoint
     self.model_path = 'checkpoint/any.pth'
 
     self.init_seed()
