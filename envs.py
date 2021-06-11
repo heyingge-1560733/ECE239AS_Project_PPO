@@ -181,7 +181,7 @@ class FrameStack(gym.Wrapper):
     def _get_ob(self):
         assert len(self.frames) == self.k
         return LazyFrames(list(self.frames))
-
+"""
 class ScaledFloatFrame(gym.ObservationWrapper):
     def __init__(self, env):
         gym.ObservationWrapper.__init__(self, env)
@@ -191,6 +191,7 @@ class ScaledFloatFrame(gym.ObservationWrapper):
         # careful! This undoes the memory optimization, use
         # with smaller replay buffers only.
         return np.array(observation).astype(np.float32) / 255.0
+"""
 
 class LazyFrames(object):
     def __init__(self, frames):
@@ -243,8 +244,9 @@ def wrap_deepmind(env, episode_life=True, clip_rewards=True, frame_stack=False, 
     if 'FIRE' in env.unwrapped.get_action_meanings():
         env = FireResetEnv(env)
     env = WarpFrame(env)
-    if scale:
-        env = ScaledFloatFrame(env)
+    ## Scaling is implemented in Model.py
+    # if scale:
+    #     env = ScaledFloatFrame(env)
     if clip_rewards:
         env = ClipRewardEnv(env)
     if frame_stack:
